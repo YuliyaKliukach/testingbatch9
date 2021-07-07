@@ -5,6 +5,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -58,6 +59,10 @@ public class CommonMethods {
         getWait().until(ExpectedConditions.elementToBeClickable(element));
     }
 
+    public static void waitForVisibility(WebElement element){
+        getWait().until(ExpectedConditions.visibilityOf(element));
+    }
+
     public static void click(WebElement element){
         waitForClickability(element);
         element.click();
@@ -70,6 +75,15 @@ public class CommonMethods {
 
     public static void jsClick(WebElement element){
         getJSExecutor().executeScript("arguments[0].click()", element);
+    }
+
+    public static Actions action(){
+        Actions action=new Actions(driver);
+        return action;
+    }
+
+    public static void moveToElement(WebElement element){
+        action().moveToElement(element).perform();
     }
 
     public static byte[] takeScreenshot(String fileName){

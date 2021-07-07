@@ -7,11 +7,11 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources/features/Dashboard.feature",
+        features = "src/test/resources/features/AddEmployee.feature",
         glue = "steps",
         dryRun = false,
         monochrome = true,
-        tags = "@dashboardtabs",
+        tags = "@db",
         plugin = {"pretty", "html:target/cucumber.html", "json:target/cucumber.json", "rerun:target/failed.txt"}
 )
 public class SmokeTestRunner {

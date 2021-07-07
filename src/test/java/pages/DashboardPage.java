@@ -26,6 +26,9 @@ public class DashboardPage extends CommonMethods {
     @FindBy(xpath = "//div[@class='menu']/ul/li")
     public List<WebElement> dashboardtabs;
 
+    @FindBy(id = "menu_admin_viewAdminModule")
+    public WebElement adminMenu;
+
     public DashboardPage(){
         PageFactory.initElements(driver,this);
     }
