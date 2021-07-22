@@ -22,7 +22,7 @@ public class HardCodedExample {
  */
 
     String baseURI = RestAssured.baseURI = "http://hrm.syntaxtechs.net/syntaxapi/api";
-    String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjYzOTE5NjMsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTYyNjQzNTE2MywidXNlcklkIjoiMjg4OSJ9.XYBrJAEwoya2_w60auf2jz0a_X7cqmMeWlRR0C1-G2Y";
+    String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjY2MTc5MjUsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTYyNjY2MTEyNSwidXNlcklkIjoiMjg4OSJ9.PUSd0gwuS7Ia-Z0kIBCb7UmjRDU4JE8UQiaPIQ2-Pt8";
     static String employee_id;
 
     // @Test
@@ -96,7 +96,7 @@ public class HardCodedExample {
 
     }
 
-    @Test
+    //@Test
     public void cGetAllEmployees(){
         RequestSpecification preparedRequest = given().header("Authorization", token)
                 .header("Content-Type", "application/json");
@@ -106,21 +106,43 @@ public class HardCodedExample {
 
         JsonPath js=new JsonPath(response.asString());
 
-        int count = js.getInt("Employees.size()");
-        System.out.println(count);
+//        int count = js.getInt("Employees.size()");
+//        System.out.println(count);
+//
+//        for (int i = 0; i < count; i++) {
+//            String employeeIDs=js.getString("Employees["+i+"].employee_id");
+//           // System.out.println(employeeIDs);
+//
+//            if(employeeIDs.contentEquals(employee_id)){
+//                System.out.println("Employee ID "+employee_id+" is present in response body");
+//
+//                String employeesNames=js.getString("Employees["+i+"].emp_firstname");
+//                System.out.println("Employee name is "+employeesNames);
+//                break;
+//            }
+//        }
 
-        for (int i = 0; i < count; i++) {
-            String employeeIDs=js.getString("Employees["+i+"].employee_id");
-           // System.out.println(employeeIDs);
+    }
 
-            if(employeeIDs.contentEquals(employee_id)){
-                System.out.println("Employee ID "+employee_id+" is present in response body");
+    @Test
+    public void dPutUpdateCreatedEmployee(){
+        /**
+         * Update the created employee
+         */
 
-                String employeesNames=js.getString("Employees["+i+"].emp_firstname");
-                System.out.println("Employee name is "+employeesNames);
-                break;
-            }
-        }
+        RequestSpecification preparedRequest = given().header("Authorization", token)
+                .header("Content-Type", "application/json").body("{\n" +
+                        "  \"employee_id\": \"" + employee_id +"\",\n"+
+                        "  \"emp_firstname\": \"Elena\",\n" +
+                        "  \"emp_lastname\": \"Ivanovna\",\n" +
+                        "  \"emp_middle_name\": \"Kliukach\",\n" +
+                        "  \"emp_gender\": \"F\",\n" +
+                        "  \"emp_birthday\": \"1966-07-04\",\n" +
+                        "  \"emp_status\": \"Employee\",\n" +
+                        "  \"emp_job_title\": \"Developer\"\n" +
+                        "}");
 
+        Response response=preparedRequest.when().put("/updateEmployee.php");
+        response.prettyPrint();
     }
 }
