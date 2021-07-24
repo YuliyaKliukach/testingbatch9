@@ -9,6 +9,7 @@ import static io.restassured.RestAssured.*;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
+import utils.APICommonMethods;
 import utils.apiConstants;
 import utils.apiPayloadConstants;
 
@@ -26,11 +27,9 @@ public class APIWorkflowSteps {
 
     @Given("a request is prepared to create an employee")
     public void a_request_is_prepared_to_create_an_employee() {
-        request = given().header(apiConstants.Header_Content_type, apiConstants.Content_type)
-                .header(apiConstants.Header_Authorization, GenerateTokenSteps.token)
-                .body(apiPayloadConstants.createEmployeePayload());
-    }
+        APICommonMethods.createEmployeeRequest(apiPayloadConstants.createEmployeeBody());
 
+    }
 
     @When("a POST call is made to create an employee")
     public void a_post_call_is_made_to_create_an_employee() {
@@ -93,6 +92,14 @@ public class APIWorkflowSteps {
             String empID=response.body().jsonPath().getString(responseEmployeeId);
             Assert.assertEquals(empID,employee_id);
         }
+    }
+
+    @Given("a request is prepared to create an employee with dynamic data {string}, {string}, {string}, {string}, {string}, {string}, {string}")
+    public void a_request_is_prepared_to_create_an_employee_with_dynamic_data(String firstName, String lastName, String middleName, String gender, String empBD, String empStatus, String empJobTitle) {
+        request = given().header(apiConstants.Header_Content_type, apiConstants.Content_type)
+                .header(apiConstants.Header_Authorization, GenerateTokenSteps.token)
+                .body(apiPayloadConstants.createEmployeeBodyDynamic(firstName, lastName,
+                        middleName, gender, empBD, empStatus, empJobTitle));
     }
     }
 

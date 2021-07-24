@@ -10,7 +10,7 @@ import utils.apiConstants;
 
 public class GenerateTokenSteps extends CommonMethods {
 
-    static String token;
+    public static String token;
 
     @Given("a token is generated")
     public void a_token_is_generated() {
