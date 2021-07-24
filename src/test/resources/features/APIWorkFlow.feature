@@ -5,8 +5,10 @@ Feature: Syntax HRMS API Workflow
   Background:
     Given a token is generated
 
+  @APIWorkflow
     Scenario: Creating Dynamic Employee
       Given a request is prepared to create an employee with dynamic data "Yuliya", "Kliukach", "Viktorovna", "F", "1987-03-20", "Employee", "Developer"
+
   @APIWorkflow
   Scenario: Creating an Employee
     Given a request is prepared to create an employee
